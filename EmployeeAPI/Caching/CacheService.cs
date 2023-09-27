@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Caching;
 
-namespace MemoryCacheDemo.Cache
+namespace EmployeeAPI.Cache
 {
     /// <summary>
     /// Caching service for storing data in-memory 

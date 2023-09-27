@@ -1,4 +1,4 @@
-﻿namespace MyDemoEmployee
+﻿namespace EmployeeAPI
 {
     public class Employee
     {

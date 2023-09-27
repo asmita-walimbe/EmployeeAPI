@@ -1,4 +1,4 @@
-using MemoryCacheDemo.Cache;
+using EmployeeAPI.Cache;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,19 +10,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "allowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin();
-            builder.AllowAnyMethod();
-            builder.AllowAnyHeader();
-        });
+    options.AddDefaultPolicy(
+            policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
 });
 
 builder.Services.AddScoped<ICacheService, CacheService>();
 
 var app = builder.Build();
-app.UseCors("allowAllOrigins");
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

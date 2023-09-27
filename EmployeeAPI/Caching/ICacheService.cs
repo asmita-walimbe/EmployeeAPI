@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MemoryCacheDemo.Cache
+﻿namespace EmployeeAPI.Cache
 {
     public interface ICacheService
     {

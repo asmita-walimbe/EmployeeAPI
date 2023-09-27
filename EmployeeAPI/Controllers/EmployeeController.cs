@@ -1,8 +1,7 @@
-﻿using MemoryCacheDemo.Cache;
-using Microsoft.AspNetCore.Http;
+﻿using EmployeeAPI.Cache;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyDemoEmployee.Controllers
+namespace EmployeeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,10 +19,10 @@ namespace MyDemoEmployee.Controllers
         /// <returns> List of EMployees </returns>
         [Route("GetEmployees")]
         [HttpGet]
-        public List<Employee> GetEmployees()
+        public IActionResult GetEmployees()
         {
             List<Employee> getResponse = _cacheService.GetData<List<Employee>>("employee");
-            return getResponse;
+            return Ok(getResponse) ;
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace MyDemoEmployee.Controllers
         /// <returns> Returns a success or failure message </returns>
         [Route("InsertEmployee")]
         [HttpPost]
-        public string InsertEmployee([FromBody] Employee emp)
+        public IActionResult InsertEmployee([FromBody] Employee emp)
         {
             List<Employee> getResponse = new List<Employee>();
             getResponse = _cacheService.GetData<List<Employee>>("employee");
@@ -45,9 +44,9 @@ namespace MyDemoEmployee.Controllers
             var response = _cacheService.SetData("employee", getResponse, DateTimeOffset.MaxValue);
             if (response)
             {
-                return "Employee added successfully";
+                return Ok();
             }
-            return "Request failed";
+            return BadRequest("Incorrect request"); 
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace MyDemoEmployee.Controllers
         /// <returns> Returns a success or failure message </returns>
         [Route("UpdateEmployee")]
         [HttpPut]
-        public string UpdateEmployee([FromBody] Employee emp)
+        public IActionResult UpdateEmployee([FromBody] Employee emp)
         {
             List<Employee> getResponse = new List<Employee>();
             getResponse = _cacheService.GetData<List<Employee>>("employee");
@@ -72,9 +71,9 @@ namespace MyDemoEmployee.Controllers
             var response = _cacheService.SetData("employee", getResponse, DateTimeOffset.MaxValue);
             if (response)
             {
-                return "Employee updated successfully";
+                return Ok();
             }
-            return "Request failed";
+            return BadRequest("Incorrect request");
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace MyDemoEmployee.Controllers
         /// <returns> Returns a success or failure message </returns>
         [Route("RemoveEmployee")]
         [HttpDelete]
-        public string RemoveEmployee([FromBody] string id)
+        public IActionResult RemoveEmployee([FromBody] string id)
         {
             List<Employee> getResponse = new List<Employee>();
             getResponse = _cacheService.GetData<List<Employee>>("employee");
@@ -96,9 +95,9 @@ namespace MyDemoEmployee.Controllers
             var response = _cacheService.SetData("employee", getResponse, DateTimeOffset.MaxValue);
             if (response)
             {
-                return "Employee removed successfully";
+                return Ok();
             }
-            return "Request failed";
+            return BadRequest("Incorrect request");
         }
 
     }
